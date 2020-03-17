@@ -33,14 +33,8 @@
 	* _printf.c - main project function file
 	* man_3_printf - man page for project printf function.
 	* use_functions.c - file containing 5 functions used for printf implementation:
-		* _putchar
-		* _puts
-		* _atoi
-		* _strcpy
-		* _strlen
-	* use_functions2.c - file containing 5 functions used for printf implementation:
-		* _itoa
-		* _strtol
-		* TBD (if needed)
-		* TBD (if needed)
-		* TBD (if needed)
+		* parser
+		* _write_char
+		* _memcpy
+		* write_base
+		* print_number
