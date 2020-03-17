@@ -1,85 +1,131 @@
 #include "holberton.h"
 #include <stdio.h>
-#include <unistd.h>
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+* write_base - function
+* @str: string to convert
+*
+* Description: write base
+* Return: string
+*/
+	void write_base(char *str)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+		_write_char(str[i]);
+}
+
+/**
+ * _memcpy - copy memory area
+ * @dest: Destination for copying
+ * @src: Source to copy from
+ * @n: The number of bytes to copy
+ * Return: The _memcpy() function returns a pointer to dest.
  */
-int _putchar(char c)
+char *_memcpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dest[i] = src[i];
+		dest[i] = '\0';
+	return (dest);
+}
+/**
+ * print_number - prints a number send to this function
+ * @args: List of arguments
+ * Return: The number of arguments printed
+ */
+int print_number(va_list args)
+{
+	int n;
+	int div;
+	int len;
+	unsigned int num;
+
+	n  = va_arg(args, int);
+	div = 1;
+	len = 0;
+
+	if (n < 0)
+	{
+		len += _write_char('-');
+		num = n * -1;
+	}
+	else
+		num = n;
+
+	for (; num / div > 9; )
+		div *= 10;
+
+	for (; div != 0; )
+	{
+		len += _write_char('0' + num / div);
+		num %= div;
+		div /= 10;
+	}
+
+	return (len);
+}
+/**
+* _write_char - function
+* @c: char to print
+*
+* Description: function to write chars to stdout
+* Return: integer
+*/
+int _write_char(char c)
 {
 	return (write(1, &c, 1));
 }
 /**
-* _strlen - function
-* @s: first operand & pointer
+* parser - function
+* @format: string
+* @f_list: struct
+* @arg_list: struct
 *
-* Description: function that returns the length of a string
-* Return: Always 0
+* Description: parse
+* Return: integer
 */
-int _strlen(char *s)
+int parser(const char format, test_t f_list[], va_list arg_list)
 {
-	int index = 0;
+	int i, j, r_val, printed_chars;
 
-	while (*s != '\0')
+	printed_chars = 0;
+	for (i = 0; format[i] != '\0'; i++) /* Iterates through the main str */
 	{
-		index++;
-		s++;
+		if (format[i] == '%') /*Checks for format specifiers */
+		{
+/*Iterates through struct to find the right func*/
+			for (j = 0; f_list[j].sym != NULL; j++)
+			{
+				if (format[i + 1] == f_list[j].sym[0])
+				{
+					r_val = f_list[j].f(arg_list);
+					if (r_val == -1)
+						return (-1);
+					printed_chars += r_val;
+					break;
+				}
+			}
+			if (f_list[j].sym == NULL && format[i + 1] != ' ')
+			{
+				if (format[i + 1] != '\0')
+				{
+					_write_char(format[i]);
+					_write_char(format[i + 1]);
+					printed_chars = printed_chars + 2;
+				}
+			else
+				return (-1);
+			}
+			i = i + 1; /* Updating i to skip format symbols */
+		}
+		else
+		{
+			_write_char(format[i]); /*call the write function*/
+			printed_chars++;
+		}
 	}
-	return (index);
-/**
-*_puts - function
-* @str: first operand and pointer
-*
-* Description: prints a string, followed by a new line to stdout
-* Return: string
-*/
-void _puts(char *str)
-{
-	while (*str != '\0')
-	{
-		_putchar(*str);
-		str++;
-	}
-	_putchar(10);
-}
-/**
-* _strcpy - function
-* @src: copy from
-* @dest: copy to
-*
-* Description: copies strng pnted by src to dest with null
-* Return: char
-*/
-char *_strcpy(char *dest, char *src)
-{
-	int i;
-
-	for (i = 0; src[i]; i++)
-	{
-		dest[i] = src[i];
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-/**
-* _atoi - function
-* @str: string to iterate and replace with int
-*
-* Description: function to convert char into int string
-* Return: 0
-*/
-int _atoi(char *str)
-{ 
-	int res = 0; // Initialize result 
-  
-	// Iterate through all characters of input string and 
-	// update result 
-	for (int i = 0; str[i] != '\0'; ++i) 
-	res = res * 10 + str[i] - '0'; 
-  
-// return result. 
-	return res; 
+	return (printed_chars);
 }
