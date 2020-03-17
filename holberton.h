@@ -25,7 +25,7 @@ int print_percent(va_list);
 int print_integer(va_list);
 int print_number(va_list);
 
-/Helper functions*/
+/*Helper functions*/
 void write_base(char *str);
 char *_memcpy(char *dest, char *src, unsigned int n);
 
