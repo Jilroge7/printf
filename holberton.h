@@ -1,14 +1,33 @@
-#ifndef HOLBERTON_H
-#define HOLBERTON_H
-#include <stdio.h>
-#include <stdarg.h>
+#include <unistd.h>
 #include <stdlib.h>
-int _putchar(char c);
-int _strlen(char *s);
-void _puts(char *str);
-char *_strcpy(char *dest, char *src);
-int _atoi(char *str);
-int _itoa(int num, char *str, int base);
-int _printf(const char *format, ...);
-#endif
+#include <stdarg.h>
 
+/**
+ * struct test - defines a structure for symbols and functions
+ *
+ * @sym: The operator
+ * @f: The function associated
+ */
+struct test
+{
+  char sym;
+  int (f)(va_list);
+};
+typedef struct test test_t;
+
+/Main functions/
+int parser(const char *format, test_t f_list[], va_list arg_list);
+int _printf(const char format, ...);
+int _write_char(char);
+int print_char(va_list);
+int print_string(va_list);
+int print_percent(va_list);
+int print_integer(va_list);
+int print_number(va_list);
+
+/Helper functions*/
+void write_base(char *str);
+char *_memcpy(char *dest, char *src, unsigned int n);
+
+
+#endif

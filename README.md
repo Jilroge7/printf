@@ -36,10 +36,10 @@
 		* _putchar
 		* _puts
 		* _atoi
-		* _itoa
+		* _strcpy
 		* _strlen
 	* use_functions2.c - file containing 5 functions used for printf implementation:
-		* _strcpy
+		* _itoa
 		* _strtol
 		* TBD (if needed)
 		* TBD (if needed)
