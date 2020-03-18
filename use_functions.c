@@ -7,7 +7,7 @@
 * Description: write base
 * Return: string
 */
-	void write_base(char *str)
+void write_base(char *str)
 {
 	int i;
 
@@ -87,7 +87,7 @@ int _write_char(char c)
 * Description: parse
 * Return: integer
 */
-int parser(const char format, test_t f_list[], va_list arg_list)
+int parser(const char *format, test_t f_list[], va_list arg_list)
 {
 	int i, j, r_val, printed_chars;
 
