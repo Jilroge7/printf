@@ -38,3 +38,8 @@
 		* _memcpy
 		* write_base
 		* print_number
+	* use_functions3.c -file containing 5 functions used for printf implementation:
+		* print_char
+		* print_string
+		* print_percent
+		* print_integer
